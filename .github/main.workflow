@@ -1,6 +1,6 @@
 workflow "Partner Engineering Weekly Radar" {
   resolves = ["weekly-radar"]
-  on = "schedule(0 12 * * 1)"
+  on = "repository_dispatch"
 }
 
 action "weekly-radar" {
