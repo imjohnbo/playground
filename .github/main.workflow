@@ -7,6 +7,6 @@ action "weekly-radar" {
   uses = "imjohnbo/weekly-radar@master"
   secrets = ["GITHUB_TOKEN"]
   env = {
-    ASSIGNEES = "imjohnbo eekdageek swinton iamhughes"
+    ASSIGNEES = "imjohnbo imjohnbo1"
   }
 }
