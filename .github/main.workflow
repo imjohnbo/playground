@@ -5,8 +5,8 @@ workflow "Partner Engineering Weekly Radar" {
 
 action "weekly-radar" {
   uses = "imjohnbo/weekly-radar@master"
-  secrets = ["GITHUB_TOKEN"]
   env = {
     ASSIGNEES = "imjohnbo imjohnbo1"
   }
+  secrets = ["GITHUB_TOKEN"]
 }
