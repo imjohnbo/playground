@@ -1,3 +1,5 @@
+const fs = require('fs');
 
-function newFeature() {
+for (let i=0; i<500; i++) {
+    fs.writeFileSync(`files/file${i}`, 'asdf');
 }
