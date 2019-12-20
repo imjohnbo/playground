@@ -1,8 +1,6 @@
 on:
+  pull_request:
   push:
-    branches:         # array of glob patterns matching against refs/heads. Optional; defaults to all
-    - master          # triggers on pushes that contain changes in master
-    - feature/*
 
 name: My Workflow
 
@@ -11,3 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - run: echo ${{ secrets.SUPER_SECRET }} | rev
