@@ -1,12 +1,18 @@
 on:
-  pull_request:
-  push:
-
-name: My Workflow
+  issues: {types: opened}
 
 jobs:
-  build:
+  comment:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - run: echo ${{ secrets.SUPER_SECRET }} | rev
+      - uses: actions/github-script@0.3.0
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({...context.issue, body: '👋 Thanks for reporting!'})
+            
+      - uses: actions/github-script@0.3.0
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rateLimit.get()
