@@ -15,4 +15,5 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.rateLimit.get()
+            const limit = await github.rateLimit.get();
+            console.log(JSON.stringify(limit))
