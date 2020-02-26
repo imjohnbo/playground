@@ -1,19 +1,14 @@
+name: Greet first time contributors
+
 on:
-  issues: {types: opened}
+  issues:
+    types: [opened]
 
 jobs:
-  comment:
+  greet:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@0.3.0
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.issues.createComment({...context.issue, body: '👋 Thanks for reporting!'})
-            
-      - uses: actions/github-script@0.3.0
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const limit = await github.rateLimit.get();
-            console.log(JSON.stringify(limit))
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: '# Welcome.\nThanks for opening an issue in this project!.'
