@@ -1,14 +1,13 @@
 name: Greet first time contributors
 
 on:
-  issues:
-    types: [opened]
+  push
 
 jobs:
   greet:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/first-interaction@v1
+    - uses: tibdex/github-app-token@master
       with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        issue-message: '# Welcome.\nThanks for opening an issue in this project!.'
+        app_id: ${{ secrets.gh_app_id }}
+        private_key: ${{ secrets.gh_private_key }}
