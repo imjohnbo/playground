@@ -13,63 +13,35 @@ jobs:
 
     - name: Fork based /ok-to-test checkout
       uses: actions/checkout@v2
-      if: github.event_name == 'repository_dispatch'
       with:
         ref: 'refs/pull/${{ github.event.client_payload.pull_request.number }}/merge'
 
     # <insert an integration test needing secrets>
     - run: |
         echo "Integration tests... success!"
+        echo '::set-env name=conclusion::success'
 
-    # # Update check run called "integration-fork" with conclusion
-    # - uses: actions/github-script@v1
-    #   id: update-check-run
-    #   env:
-    #     number: ${{ github.event.client_payload.pull_request.number }}
-    #     job: ${{ github.job }}
-    #   with:
-    #     github-token: ${{ secrets.GITHUB_TOKEN }}
-    #     script: |
-    #       const { data: pull } = await github.pulls.get({
-    #         ...context.repo,
-    #         pull_number: process.env.number
-    #       });
-    #       const ref = pull.head.sha;
+    # Set check on PR
+    - uses: actions/github-script@v1
+      env:
+        head_sha: ${{ steps.get-sha.outputs.result }}
+        number: ${{ github.event.client_payload.pull_request.number }}
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const { data: pull } = await github.pulls.get({
+            ...context.repo,
+            pull_number: process.env.number
+          });
+          const ref = pull.head.sha;
 
-    #       console.log('ref: ', ref);
-
-    #       const { data: checks } = await github.checks.listForRef({
-    #         ...context.repo,
-    #         ref
-    #       });
-
-    #       console.log('checks: ', checks);
-
-    #       const check = checks.check_runs.filter(c => c.name === process.env.job);
-
-    #       console.log('check: ', check);
-
-    #       const { data: result } = await github.checks.update({
-    #         ...context.repo,
-    #         check_run_id: check[0].id,
-    #         status: 'completed',
-    #         conclusion: process.env.conclusion
-    #       });
-
-    # # Set check on PR
-    # - uses: actions/github-script@v1
-    #   env:
-    #     head_sha: ${{ steps.get-sha.outputs.result }}
-    #   with:
-    #     github-token: ${{ secrets.GITHUB_TOKEN }}
-    #     script: |
-    #       github.checks.create({
-    #         ...context.repo,
-    #         name: 'Integration tests',
-    #         head_sha: process.env.head_sha,
-    #         status: 'completed',
-    #         conclusion: process.env.conclusion
-    #       })
+          github.checks.create({
+            ...context.repo,
+            name: 'Integration tests',
+            head_sha: ref,
+            status: 'completed',
+            conclusion: process.env.conclusion
+          })
 
     # Comment on the PR to show that repository secrets can be used
     - name: Silly secrets availability POC
