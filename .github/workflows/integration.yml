@@ -70,25 +70,11 @@ jobs:
             conclusion: process.env.conclusion
           });
 
-    # # Set check on PR
-    # - uses: actions/github-script@v1
-    #   env:
-    #     head_sha: ${{ steps.get-sha.outputs.result }}
-    #   with:
-    #     github-token: ${{ secrets.GITHUB_TOKEN }}
-    #     script: |
-    #       github.checks.create({
-    #         ...context.repo,
-    #         name: 'Integration tests',
-    #         head_sha: process.env.head_sha,
-    #         status: 'completed',
-    #         conclusion: process.env.conclusion
-    #       })
-
     # Comment on the PR to show that repository secrets can be used
     - uses: actions/github-script@v1
       env:
         number: ${{ github.event.client_payload.pull_request.number }}
+        message: ${{ secrets.MESSAGE }}
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
@@ -96,5 +82,5 @@ jobs:
             issue_number: process.env.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: `Well, hey there! 🤠 Conclusion of integration tests: ${process.env.conclusion}.`
+            body: `Well, hey there! 🤠 Psst, secret message: ${process.env.message}.`
           })
