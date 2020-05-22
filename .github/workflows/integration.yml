@@ -35,34 +35,34 @@ jobs:
         echo "Integration tests... success!"
         echo '::set-env name=conclusion::success'
 
-    # Get merge commit sha
-    - uses: actions/github-script@v1
-      id: get-sha
-      env:
-        number: ${{ github.event.client_payload.pull_request.number }}
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const { data: pull } = await github.pulls.get({
-            ...context.repo,
-            pull_number: process.env.number
-          });
-          return pull.merge_commit_sha;
+    # # Get merge commit sha
+    # - uses: actions/github-script@v1
+    #   id: get-sha
+    #   env:
+    #     number: ${{ github.event.client_payload.pull_request.number }}
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     script: |
+    #       const { data: pull } = await github.pulls.get({
+    #         ...context.repo,
+    #         pull_number: process.env.number
+    #       });
+    #       return pull.merge_commit_sha;
 
-    # Set check on PR
-    - uses: actions/github-script@v1
-      env:
-        head_sha: ${{ steps.get-sha.outputs.result }}
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          github.checks.create({
-            ...context.repo,
-            name: 'Integration tests',
-            head_sha: process.env.head_sha,
-            status: 'completed',
-            conclusion: process.env.conclusion
-          })
+    # # Set check on PR
+    # - uses: actions/github-script@v1
+    #   env:
+    #     head_sha: ${{ steps.get-sha.outputs.result }}
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     script: |
+    #       github.checks.create({
+    #         ...context.repo,
+    #         name: 'Integration tests',
+    #         head_sha: process.env.head_sha,
+    #         status: 'completed',
+    #         conclusion: process.env.conclusion
+    #       })
 
     # Comment on the PR to show that repository secrets can be used
     - uses: actions/github-script@v1
