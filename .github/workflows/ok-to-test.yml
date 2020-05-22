@@ -15,6 +15,5 @@ jobs:
         token: ${{ secrets.REPO_ACCESS_TOKEN }}
         reaction-token: ${{ secrets.GITHUB_TOKEN }}
         issue-type: pull-request
-        event-type-suffix: ''
         commands: ok-to-test
         permission: write

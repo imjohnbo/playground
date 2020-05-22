@@ -2,7 +2,7 @@
 on:
   pull_request:
   repository_dispatch:
-    types: [ok-to-test]
+    types: [ok-to-test-command]
 
 name: Integration tests
 
