@@ -1,0 +1,29 @@
+# Run secret-dependent integration tests only after /ok-to-test approval
+on:
+  repository_dispatch:
+    types: [ok-to-test]
+
+name: Integration tests
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+      with:
+        ref: 'refs/pull/${{ github.event.client_payload.number }}/merge'
+
+    # <insert an integration test needing secrets>
+
+    # Comment on the PR to prove secrets can be used
+    - uses: actions/github-script@v1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Well, hey there! 🤠'
+          })
