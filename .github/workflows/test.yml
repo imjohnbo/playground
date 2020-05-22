@@ -9,25 +9,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     # But which ref or sha?. We have the pull request number in ${{ github.event.client_payload.number }}.
-    - uses: actions/github-script@v1
-      id: get-sha
-      env:
-        number: ${{ github.event.client_payload.number }}
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const { data: pull } = await github.pulls.get({
-            ...context.repo,
-            pull_number: process.env.number
-          });
-          console.log('pull is: ', pull);
-          console.log('pull.merge_commit_sha is: ', pull.merge_commit_sha);
-          // TODO error handling
-          return pull.merge_commit_sha;
+    # - uses: actions/github-script@v1
+    #   id: get-sha
+    #   env:
+    #     number: ${{ github.event.client_payload.number }}
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     script: |
+    #       const { data: pull } = await github.pulls.get({
+    #         ...context.repo,
+    #         pull_number: process.env.number
+    #       });
+    #       console.log('pull is: ', pull);
+    #       console.log('pull.merge_commit_sha is: ', pull.merge_commit_sha);
+    #       // TODO error handling
+    #       return pull.merge_commit_sha;
+
+    # Test merge commit sha is apparently not available to check out
+    # - uses: actions/checkout@v2
+    #   with:
+    #     ref: ${{ steps.get-sha.outputs.result }}
 
     - uses: actions/checkout@v2
       with:
-        ref: ${{ steps.get-sha.outputs.result }}
+        ref: 'refs/pull/${{ github.event.client_payload.number }}/merge'
 
     - uses: actions/setup-node@v1
     - run: |
