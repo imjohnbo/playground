@@ -8,8 +8,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: echo "Running tests!"
-    - run: echo "$TOKEN"
+    # But which ref or sha?. We have the pull request number in ${{ github.event.client_payload.number }}.
+    - uses: actions/github-script@v1
+      id: get-sha
       env:
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        number: ${{ github.event.client_payload.number }}
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const pull = await github.pulls.get({
+            ...context.repo,
+            pull_number: env.number
+          });
+          console.log(pull);
+          // TODO error handling
+          return pull.merge_commit_sha;
+
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ steps.get-sha.outputs.result }}
+        
+    - uses: actions/setup-node@v1
+    - run: |
+        npm i
+        npm t

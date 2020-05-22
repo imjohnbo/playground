@@ -1,1 +1,7 @@
-const fs = require('fs');
+const addOne = function(num) {
+    return num + 1;
+};
+
+module.exports = {
+    addOne
+};

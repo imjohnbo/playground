@@ -7,18 +7,16 @@ on:
 jobs:
   ok-to-test:
     runs-on: ubuntu-latest
+    # If someone comments "/ok-to-test" on a pull request
+    if: contains(${{ github.event.comment.body }}, '/ok-to-test') && contains(github.event.comment.html_url, '/pull/')
     steps:
-    - name: Check for "/ok-to-test"
-      run: echo "$COMMENT"
-      env:
-        COMMENT: ${{ github.event.comment.body }}
-      if: contains(${{ github.event.comment.body }}, '/ok-to-test')
-
     - name: Repository Dispatch
       if: success()
+      # Or even better, https://github.com/peter-evans/slash-command-dispatch
       uses: peter-evans/repository-dispatch@v1
       with:
         token: ${{ secrets.REPO_ACCESS_TOKEN }}
         repository: ${{ github.repository }}
         event-type: ok-to-test
-        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+        # Provide the pull request number
+        client-payload: '{"number": "${{ github.event.issue.number }}"}'
