@@ -1,13 +1,19 @@
-name: Greet first time contributors
-
 on:
-  push
+  push:
+    branches:         # array of glob patterns matching against refs/heads. Optional; defaults to all
+    - master          # triggers on pushes that contain changes in master
+    - feature/*
+  repository_dispatch:
+    types: [ok-to-test]
+
+name: Test
 
 jobs:
-  greet:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - uses: tibdex/github-app-token@v1.0.2
-      with:
-        app_id: ${{ secrets.gh_app_id }}
-        private_key: ${{ secrets.gh_private_key }}
+    - uses: actions/checkout@v2
+    - run: echo "Running tests!"
+    - run: echo "$TOKEN"
+      env:
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
