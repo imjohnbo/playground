@@ -16,11 +16,12 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const pull = await github.pulls.get({
+          const { data: pull } = await github.pulls.get({
             ...context.repo,
             pull_number: process.env.number
           });
-          console.log(pull);
+          console.log('pull is: ', pull);
+          console.log('pull.merge_commit_sha is: ', pull.merge_commit_sha);
           // TODO error handling
           return pull.merge_commit_sha;
 
