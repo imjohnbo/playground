@@ -18,11 +18,13 @@ jobs:
 
     # Comment on the PR to prove secrets can be used
     - uses: actions/github-script@v1
+      env:
+        number: ${{ github.event.client_payload.number }}
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           github.issues.createComment({
-            issue_number: context.issue.number,
+            issue_number: process.env.number,
             owner: context.repo.owner,
             repo: context.repo.repo,
             body: 'Well, hey there! 🤠'
