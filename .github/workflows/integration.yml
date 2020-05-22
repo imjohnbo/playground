@@ -21,7 +21,7 @@ jobs:
       uses: actions/github-script@v1
       env:
         number: ${{ github.event.client_payload.pull_request.number }}
-        secret-message: ${{ secret.message }}
+        secret-message: ${{ secrets.MESSAGE }}
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
