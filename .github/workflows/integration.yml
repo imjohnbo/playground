@@ -1,86 +1,14 @@
-# Run secret-dependent integration tests only after /ok-to-test approval
 on:
-  pull_request:
-  repository_dispatch:
-    types: [ok-to-test-command]
+  push:
+    branches:         # array of glob patterns matching against refs/heads. Optional; defaults to all
+    - master          # triggers on pushes that contain changes in master
+    - feature/*
 
-name: Integration tests
+name: My Workflow
 
 jobs:
-  integration-trusted:
+  build:
     runs-on: ubuntu-latest
-    # Trusted, branch-based pull request with secrets
-    if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
-
-    - name: Branch based PR checkout
-      uses: actions/checkout@v2
-      if: github.event.pull_request.head.repo.full_name == github.repository
-
-    # <insert an integration test needing secrets>
-
-  integration-fork:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'repository_dispatch'
-    steps:
-
-    - name: Fork based /ok-to-test checkout
-      uses: actions/checkout@v2
-      if: github.event_name == 'repository_dispatch'
-      with:
-        ref: 'refs/pull/${{ github.event.client_payload.pull_request.number }}/merge'
-
-    # <insert an integration test needing secrets>
-    - run: |
-        echo "Integration tests... success!"
-        echo '::set-env name=conclusion::success'
-
-    # Update check run called "integration-fork" with conclusion
-    - uses: actions/github-script@v1
-      id: update-check-run
-      env:
-        number: ${{ github.event.client_payload.pull_request.number }}
-        job: ${{ github.job }}
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          const { data: pull } = await github.pulls.get({
-            ...context.repo,
-            pull_number: process.env.number
-          });
-          const ref = pull.head.sha;
-
-          console.log('ref: ', ref);
-
-          const { data: checks } = await github.checks.listForRef({
-            ...context.repo,
-            ref
-          });
-
-          console.log('checks: ', checks);
-
-          const check = checks.check_runs.filter(c => c.name === process.env.job);
-
-          console.log('check: ', check);
-
-          const { data: result } = await github.checks.update({
-            ...context.repo,
-            check_run_id: check[0].id,
-            status: 'completed',
-            conclusion: process.env.conclusion
-          });
-
-    # Comment on the PR to show that repository secrets can be used
-    - uses: actions/github-script@v1
-      env:
-        number: ${{ github.event.client_payload.pull_request.number }}
-        message: ${{ secrets.MESSAGE }}
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          github.issues.createComment({
-            issue_number: process.env.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: `Well, hey there! 🤠 Psst, secret message: ${process.env.message}.`
-          })
+    - uses: actions/checkout@v2
+    - uses: imjohnbo/playground@master
