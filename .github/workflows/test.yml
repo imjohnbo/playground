@@ -9,5 +9,3 @@ jobs:
     steps:
 
     - run: echo "Hello"
-    
-    - run: erk
