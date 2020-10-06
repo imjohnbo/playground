@@ -1,0 +1,13 @@
+on:
+  workflow_dispatch
+
+name: Test
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+
+    - run: echo "Hello"
+    
+    - run: erk
