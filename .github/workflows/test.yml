@@ -1,5 +1,6 @@
 on:
-  push
+  push:
+    branches: $default-branch
 
 name: Test
 
@@ -8,6 +9,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - run: echo "Hello"
-    
-    - run: erk
+    - run: echo "Hello, world!"
