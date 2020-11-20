@@ -1,7 +1,5 @@
 on:
-  push:
-    branches:
-      - $default-branch
+  workflow_dispatch:
 
 name: Test
 
@@ -10,4 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - run: echo "Hello, world!"
+    - run: echo "MY_DATE=$(date -u '+%B, %Y')" >> $GITHUB_ENV
+      
+    - uses: imjohnbo/issue-bot@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        assignees: "imjohnbo"    # GitHub handles without the @
+        label: "test"
+        pinned: false
+        close-previous: false
+        title: ${{ env.MY_DATE }}
+        body: hello!
