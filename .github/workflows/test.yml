@@ -15,7 +15,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         assignees: "imjohnbo"    # GitHub handles without the @
-        label: "test"
+        labels: "test"
         pinned: false
         close-previous: false
         title: ${{ env.MY_DATE }}
