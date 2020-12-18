@@ -1,22 +1,28 @@
 on:
-  workflow_dispatch:
+  push
 
-name: Test
+name: Test success and failure
 
 jobs:
   unit:
     runs-on: ubuntu-latest
     steps:
 
-    - run: echo "MY_DATE=$(date -u '+%B, %Y')" >> $GITHUB_ENV
+    - name: Successful step
+      id: successful-step 
+      run: echo "MY_DATE=$(date -u '+%B, %Y')" >> $GITHUB_ENV
       
-    - uses: imjohnbo/issue-bot@v2
+    - name: Log outcome
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        assignees: "imjohnbo"    # GitHub handles without the @
-        labels: "test"
-        pinned: false
-        close-previous: false
-        title: ${{ env.MY_DATE }}
-        body: hello!
+        OUTCOME: ${{ steps.successful-step.outcome }}
+      run: echo $OUTCOME
+      
+    - name: Echo if successful
+      if: ${{ steps.successful-step.outcome }} == 'success'
+      run: |-
+        echo "Success!"
+            
+    - name: Echo if failure
+      if: ${{ steps.successful-step.outcome }} == 'failure'
+      run: |-
+        echo "Failure!"
