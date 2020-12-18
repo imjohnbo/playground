@@ -18,11 +18,11 @@ jobs:
       run: echo $OUTCOME
       
     - name: Echo if successful
-      if: ${{ steps.successful-step.outcome }} == 'success'
+      if: steps.successful-step.outcome == 'success'
       run: |-
         echo "Success!"
             
     - name: Echo if failure
-      if: ${{ steps.successful-step.outcome }} == 'failure'
+      if: steps.successful-step.outcome == 'failure'
       run: |-
         echo "Failure!"
