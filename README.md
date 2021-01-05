@@ -1,3 +1,2 @@
 # playground
-
-GitHub playground
+Playground
