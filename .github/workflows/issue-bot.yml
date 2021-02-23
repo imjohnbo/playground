@@ -1,0 +1,31 @@
+
+on:
+  workflow_dispatch
+
+name: Test Issue Bot
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: imjohnbo/extract-issue-template-fields@v0.0.1
+      id: extract
+      with:
+        path: .github/ISSUE_TEMPLATE/bug_report.md
+      env: 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: imjohnbo/issue-bot@release/v3.1
+      with:
+        title: ${{ steps.extract.outputs.title }}
+        body: ${{ steps.extract.outputs.body }}
+        assignees: ${{ steps.extract.outputs.assignees }}
+        labels: ${{ steps.extract.outputs.labels }}
+        close-previous: true
+        linked-comments: true
+        project-type: organization
+        project-owner: imjohnbo-org
+        project: 1
+        column: a
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
