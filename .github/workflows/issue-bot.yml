@@ -10,12 +10,10 @@ jobs:
     environment: production
     steps:
 
-    - uses: imjohnbo/issue-bot@release/v3.1
+    - uses: imjohnbo/issue-bot@v3
       with:
         title: yo
         project-type: organization
         project-owner: imjohnbo-org
         project: 1
         column: a
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
