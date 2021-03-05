@@ -13,7 +13,4 @@ jobs:
     - uses: imjohnbo/issue-bot@v3
       with:
         title: yo
-        project-type: organization
-        project-owner: imjohnbo-org
-        project: 1
-        column: a
+        body: hi
