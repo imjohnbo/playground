@@ -1,5 +1,5 @@
 const addOne = function(num) {
-    return num + 1;
+    return num + 2;
 };
 
 module.exports = {
