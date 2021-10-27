@@ -13,6 +13,7 @@ jobs:
           DATE: $(date "+%m/%d/%Y")
           REPO_ID: 'MDEwOlJlcG9zaXRvcnkxNzg0NTAzOTQ='
           CATEGORY_ID: '"DIC_kwDOCqLv2s4B_m67'
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           BODY: |-
             Hello!
 
