@@ -1,0 +1,36 @@
+name: Create Discussionb
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate new discussion
+        env:
+          DATE: $(date "+%m/%d/%Y")
+          REPO_ID: 'MDEwOlJlcG9zaXRvcnkxNzg0NTAzOTQ='
+          CATEGORY_ID: '"DIC_kwDOCqLv2s4B_m67'
+          BODY: |-
+            Hello!
+
+            👀 Top-of-Mind: etc.
+        run: |-
+          gh api graphql \
+            -F body=$BODY \
+            -F title="Weekly Snippets $DATE" \
+            -F repositoryId=$REPO_ID \
+            -F categoryId=$CATEGORY_ID \
+            -f query='
+          mutation CreateDiscussion($body: String!, $title: String!) { 
+            # input type: CreateDiscussionInput
+            createDiscussion(input: {repositoryId: $repositoryId, categoryId: $categoryId, body: $body, title: $title}) {
+
+              # response type: CreateDiscussionPayload
+              discussion {
+                id
+              }
+            }
+          }'
