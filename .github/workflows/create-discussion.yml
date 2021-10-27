@@ -1,4 +1,4 @@
-name: Create Discussionb
+name: Create Discussion
 
 on:
   workflow_dispatch:
@@ -19,10 +19,10 @@ jobs:
             👀 Top-of-Mind: etc.
         run: |-
           gh api graphql \
-            -F body=$BODY \
+            -F body="$BODY" \
             -F title="Weekly Snippets $DATE" \
-            -F repositoryId=$REPO_ID \
-            -F categoryId=$CATEGORY_ID \
+            -F repositoryId="$REPO_ID" \
+            -F categoryId="$CATEGORY_ID" \
             -f query='
           mutation CreateDiscussion($body: String!, $title: String!) { 
             # input type: CreateDiscussionInput
