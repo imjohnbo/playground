@@ -25,7 +25,7 @@ jobs:
             -F repositoryId="$REPO_ID" \
             -F categoryId="$CATEGORY_ID" \
             -f query='
-          mutation CreateDiscussion($body: String!, $title: String!) { 
+          mutation CreateDiscussion($body: String!, $title: String!, $repositoryId: String!, $categoryId: String!) { 
             # input type: CreateDiscussionInput
             createDiscussion(input: {repositoryId: $repositoryId, categoryId: $categoryId, body: $body, title: $title}) {
 
