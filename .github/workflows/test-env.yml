@@ -11,3 +11,5 @@ jobs:
 
     - run: |
         echo $JOB
+      env:
+        JOB: ${{ github.job }}
