@@ -1,0 +1,15 @@
+on:
+  workflow_dispatch
+
+name: Dump Context
+
+jobs:
+  complicated-job-name:
+    name: This is a Complicated Job Name
+    runs-on: ubuntu-latest
+    steps:
+
+    - run: |
+        echo $NAME
+      env:
+        NAME: process.env.job
