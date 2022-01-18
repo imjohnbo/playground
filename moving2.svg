@@ -1,0 +1,12 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><style>
+    .line-hammer1 {animation:line-hammer1 2s infinite; transform-origin: 60px 60px;}
+    @keyframes line-hammer1 {
+        0%{transform:rotate(0deg);}
+        30%{transform:translate3d(4px, -8px, 0) rotate(20deg);}
+        40%{transform:translate3d(0, -5px, 0) rotate(-45deg);}
+        60%{transform:translate3d(4px, -8px, 0) rotate(20deg);}
+        70%{transform:translate3d(0, -5px, 0) rotate(-45deg);}
+        80%{transform:rotate(0deg);}
+    }
+    
+</style><g class="line-hammer1" style="animation-duration: 2s;"><path d="M88.8776 62.7023L37.593 14.8787L30.7591 22.2072L82.0436 70.0308L88.8776 62.7023Z" fill="#FFF" stroke="#000" stroke-width="2px"></path><path d="M43.2143 19.132L53.6311 16.1379L58.3465 20.5351L39.2156 41.0504L30.4219 32.8501L43.2143 19.132Z" fill="#FFF" stroke="#000" stroke-width="2px"></path></g><rect x="8" y="59" width="15" height="12" rx="3" fill="#FFF" stroke="#000" stroke-width="2px"></rect><rect x="30" y="80" width="16" height="14" fill="#FFF" stroke="#000" stroke-width="2px"></rect><rect x="25" y="74" width="26" height="9" rx="2" fill="#FFF" stroke="#000" stroke-width="2px"></rect><path d="M21 96.25C21 93.3505 23.3505 91 26.25 91H49.75C52.6495 91 55 93.3505 55 96.25V96.25C55 97.2165 54.2165 98 53.25 98H22.75C21.7835 98 21 97.2165 21 96.25V96.25Z" fill="#FFF" stroke="#000" stroke-width="2px"></path><path d="M18 58C18 56.8954 18.8954 56 20 56H66C67.1046 56 68 56.8954 68 58V59C68 67.8366 60.8366 75 52 75H20C18.8954 75 18 74.1046 18 73V58Z" fill="#FFF" stroke="#000" stroke-width="2px"></path></svg>
