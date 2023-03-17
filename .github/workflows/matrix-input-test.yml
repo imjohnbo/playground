@@ -1,0 +1,28 @@
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+
+name: Testing Matrix and Workflow Dispatch Inputs Together
+
+jobs:
+  example_matrix:
+    strategy:
+      matrix:
+        timeOfDay: ['morning', 'afternoon', 'evening']
+    runs-on: ubuntu-latest
+    steps:
+    - name: The Matrix To Rule Them All
+      env:
+        LOG_LEVEL: ${{ inputs.logLevel }}
+        TIME_OF_DAY: ${{ matrix.timeOfDay }}
+      run: |-
+        echo "Hello, I'm a $LOG_LEVEL log message in the $TIME_OF_DAY"
