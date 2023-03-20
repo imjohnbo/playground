@@ -24,5 +24,6 @@ jobs:
       env:
         LOG_LEVEL: ${{ inputs.logLevel }}
         TIME_OF_DAY: ${{ matrix.timeOfDay }}
+        ONE_MORE_THING: ${{ inputs.logLevel || matrix.timeOfDay }}
       run: |-
-        echo "Hello, I'm a $LOG_LEVEL log message in the $TIME_OF_DAY"
+        echo "Hello, I'm a $LOG_LEVEL log message in the $TIME_OF_DAY. I also wanted to say, $ONE_MORE_THING!"
