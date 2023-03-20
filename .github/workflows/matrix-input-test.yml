@@ -3,7 +3,6 @@ on:
     inputs:
       logLevel:
         description: 'Log level'
-        default: 'warning'
 
 name: Testing Matrix and Workflow Dispatch Inputs Together
 
