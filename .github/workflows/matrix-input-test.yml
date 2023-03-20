@@ -4,11 +4,6 @@ on:
       logLevel:
         description: 'Log level'
         default: 'warning'
-        type: choice
-        options:
-        - info
-        - warning
-        - debug
 
 name: Testing Matrix and Workflow Dispatch Inputs Together
 
