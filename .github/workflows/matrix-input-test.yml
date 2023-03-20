@@ -3,7 +3,6 @@ on:
     inputs:
       logLevel:
         description: 'Log level'
-        required: true
         default: 'warning'
         type: choice
         options:
